@@ -7,17 +7,12 @@ import os.path
 filename = os.path.basename(__file__)
 
 print("This script creats a cloud folder for specified users.")
-# Read input from keyboard and store into global variables.
-#portal = input("Please enter the portal address: ")
-#username = input("Please enter the global admin username: ")
-#password = getpass.getpass("Please enter the password for " + username + ": ")
-#domain = input("Please enter the domain: ")
 
-# Hardcode global variables.
-portal = 'todd.ctera.me'
-username = 'admin'
-password = 'Breakthings456'
-domain = 'ctera.lab'
+# Read input into variables
+portal = input("Please enter the portal address: ")
+username = input("Please enter the global admin username: ")
+password = getpass.getpass("Please enter the password for " + username + ": ")
+domain = input("Please enter the domain: ")
 cloud_folder = 'H Drive'
 folder_group = 'portal-CloudFolders'
 

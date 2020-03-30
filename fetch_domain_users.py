@@ -3,15 +3,10 @@ from cterasdk import *
 import getpass
 
 print("This script tries to fetch hardcoded domain users or groups")
-#portal = input("Please enter the portal address: ")
-#username = input("Please enter the global admin username: ")
-#password = getpass.getpass("Please enter the password for " + username + ": ")
-#domain = input("Please enter the domain: ")
-
-portal = 'todd.ctera.me'
-username = 'admin'
-password = 'Breakthings456'
-domain = 'ctera.lab'
+portal = input("Please enter the portal address: ")
+username = input("Please enter the global admin username: ")
+password = getpass.getpass("Please enter the password for " + username + ": ")
+domain = input("Please enter the domain: ")
 
 if __name__ == "__main__":
     try:

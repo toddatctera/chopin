@@ -3,15 +3,10 @@ from cterasdk import *
 import getpass
 
 print("This script will write or overwrite a file containing usersnames for the specified domain.")
-#portal = input("Please enter the portal address: ")
-#username = input("Please enter the global admin username: ")
-#password = getpass.getpass("Please enter the password for " + username + ": ")
-#domain = input("Please enter the domain: ")
-
-portal = 'todd.ctera.me'
-username = 'admin'
-password = 'Breakthings456'
-domain = 'ctera.lab'
+portal = input("Please enter the portal address: ")
+username = input("Please enter the global admin username: ")
+password = getpass.getpass("Please enter the password for " + username + ": ")
+domain = input("Please enter the domain: ")
 
 if __name__ == "__main__":
     try:
