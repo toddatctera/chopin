@@ -23,13 +23,15 @@ if __name__ == "__main__":
         admin.login(username, password)
         print("Creating user/group objects to be fetched...") 
 
-        print("initalizing empty array")
+        print("Initializing empty arrays")
         users = []
+        accounts = []
         print("Opening input file for reading")
-        with open(input_file) as f:
-            for line in f:
-                users.append(line)
-                print("appending this to users array: " + line)
+        with open(input_file) as file:
+            for user in file:
+               account = portal_types.UserAccount(user.rstrip('\n'), 'ctera.lab')
+               accounts.append(account)
+        admin.directoryservice.fetch(accounts)
 
     except CTERAException as error:
         print(error)
