@@ -15,7 +15,7 @@ if __name__ == "__main__":
         admin.login(username, password)
         print ("Getting list of portal users in " + domain)
         users = admin.users.list_domain_users(domain)
-        filename = domain + "-users.txt"
+        filename = portal + '-' + domain + "-users.txt"
         file = open(filename, "w")
         for user in users:
             #print(user.name)
