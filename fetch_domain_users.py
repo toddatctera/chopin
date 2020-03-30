@@ -14,10 +14,10 @@ if __name__ == "__main__":
         print("Logging into " + portal)
         admin.login(username, password)
         print("Creating user/group objects to be fetched...") 
-        user = portal_types.UserAccount('todd',domain)
+        #user = portal_types.UserAccount('todd',domain)
         group = portal_types.GroupAccount('Domain Users',domain)
         print("Fetching user accounts and groups...")
-        admin.directoryservice.fetch([user])
+        admin.directoryservice.fetch([group])
     except CTERAException as error:
         print(error)
     admin.logout()
