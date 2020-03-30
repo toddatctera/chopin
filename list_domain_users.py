@@ -18,7 +18,7 @@ if __name__ == "__main__":
         filename = domain + "-users.txt"
         file = open(filename, "w")
         for user in users:
-            print(user.name)
+            #print(user.name)
             file.write(user.name + '\n')
         file.close()
         print("Usernames have been written to " + filename)
