@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+# This script creats a cloud folder for specified users.
 from cterasdk import *
 import getpass
 import os.path
@@ -26,16 +27,15 @@ if __name__ == "__main__":
         print("Logging into " + portal)
         admin.login(username, password)
         print("Successfully logged in to " + portal)
-        
         print("Creating domain users array.")
         users = admin.users.list_domain_users(domain)
         print("Looping through array...")
         for user in users:
-            print("Hey " + user.name)
-            #user_account = portal_types.UserAccount(user,domain)
+            print("Username is " + user.name)
+            user_account = portal_types.UserAccount(user.name,domain)
+            print("User account is " + user_account.name) 
             print("Creating " + cloud_folder + ' for ' + user.name)
-            #admin.cloudfs.mkdir(cloud_folder, folder_group, user_account)
-            admin.cloudfs.mkdir(cloud_folder, folder_group, portal_types.UserAccount(user,domain))
+            admin.cloudfs.mkdir(cloud_folder, folder_group, user_account)
     except CTERAException as error:
         print(error)
     admin.logout()
