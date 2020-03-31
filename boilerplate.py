@@ -7,16 +7,10 @@ filename = os.path.basename(__file__)
 
 print("This script is a simple starting point.")
 # Read input from keyboard and store into global variables.
-#portal = input("Please enter the portal address: ")
-#username = input("Please enter the global admin username: ")
-#password = getpass.getpass("Please enter the password for " + username + ": ")
-#domain = input("Please enter the domain: ")
-
-# Hardcode global variables.
-portal = 'todd.ctera.me'
-username = 'admin'
-password = 'Breakthings456'
-domain = 'ctera.lab'
+portal = input("Please enter the portal address: ")
+username = input("Please enter the global admin username: ")
+password = getpass.getpass("Please enter the password for " + username + ": ")
+domain = input("Please enter the domain: ")
 
 if __name__ == "__main__":
     try:

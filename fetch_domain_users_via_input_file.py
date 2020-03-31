@@ -3,17 +3,11 @@ from cterasdk import *
 import getpass
 import os.path
 
-# Hardcoded global variables.
-portal = 'todd.ctera.me'
-username = 'admin'
-password = 'Breakthings456'
-domain = 'ctera.lab'
-
 print("This script tries to fetch hardcoded domain users or groups")
-#portal = input("Please enter the portal address: ")
-#username = input("Please enter the global admin username: ")
-#password = getpass.getpass("Please enter the password for " + username + ": ")
-#domain = input("Please enter the domain: ")
+portal = input("Please enter the portal address: ")
+username = input("Please enter the global admin username: ")
+password = getpass.getpass("Please enter the password for " + username + ": ")
+domain = input("Please enter the domain: ")
 input_file = 'input-users.txt'
 
 if __name__ == "__main__":
