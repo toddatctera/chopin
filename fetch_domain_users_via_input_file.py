@@ -23,7 +23,7 @@ if __name__ == "__main__":
         print("Opening input file for reading")
         with open(input_file) as file:
             for user in file:
-               account = portal_types.UserAccount(user.rstrip('\n'), 'ctera.lab')
+               account = portal_types.UserAccount(user.rstrip('\n'), domain)
                accounts.append(account)
         admin.directoryservice.fetch(accounts)
 
