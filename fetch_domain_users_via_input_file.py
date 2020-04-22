@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 from cterasdk import *
+import logging
 import getpass
 import os.path
 
@@ -15,18 +16,18 @@ if __name__ == "__main__":
         admin = GlobalAdmin(portal)
         print("Logging into " + portal)
         admin.login(username, password)
-        print("Creating user/group objects to be fetched...") 
-
-        print("Initializing empty arrays")
-        users = []
         accounts = []
-        print("Opening input file for reading")
-        with open(input_file) as file:
-            for user in file:
-               account = portal_types.UserAccount(user.rstrip('\n'), 'ctera.lab')
-               accounts.append(account)
-        admin.directoryservice.fetch(accounts)
-
+        with open(input_file) as users:
+            for user in users:
+                try:
+                    account = portal_types.UserAccount(user.rstrip('\n'), domain)
+                    accounts.append(account)
+                except CTERAException as error:
+                    print(error)
+        try:
+            admin.directoryservice.fetch(accounts)
+        except CTERAException as error:
+            print(error)
     except CTERAException as error:
         print(error)
     admin.logout()
