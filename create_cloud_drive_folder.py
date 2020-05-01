@@ -64,4 +64,4 @@ if __name__ == "__main__":
     failed_file.close()    
     admin.logout()
     logging.info("Logged out of " + portal)
-    logging.info('Exiting script' + filename)
+    logging.info('Exiting script: ' + filename)
