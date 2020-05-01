@@ -1,21 +1,20 @@
 #!/usr/bin/python3
-# This script creats a cloud folder for specified users.
-from cterasdk import *
-import getpass
+# Creates a cloud folder for all users in the specified domain.
 import os.path
-import time
 import logging
+import getpass
+from cterasdk import *
 
-filename = os.path.basename(__file__)
 portal = None
 username = None
 password = None
 domain = None
 cloud_folder = None
-folder_group = 'portal-CloudFolders'
-timestr = time.strftime("%Y-%m-%d-%H-%M-%S")
-file_failed_users = 'failed-users-' + timestr + '.txt'
-#file_failed_users = 'failed-users.txt'
+folder_group = None
+failed_users = []
+filename = os.path.basename(__file__)
+
+# Enable and set logging level.
 config.Logging.get().enable()
 config.Logging.get().setLevel(logging.INFO)
 
@@ -23,45 +22,37 @@ logging.info('Starting script: ' + filename)
 
 if __name__ == "__main__":
     try:
-        print("This script creats a new cloud folder for all valid domain users.")
-        portal = input("Please enter the portal address: ") 
-        username = input("Please enter the global admin username: ") 
+        print("This script creates a cloud folder for specified domain users.")
+        portal = input('Enter the portal address: ') 
+        username = input('Enter the global admin username: ') 
+        password = getpass.getpass('Enter the password for ' + username + ': ')
         admin = GlobalAdmin(portal)
-        password = getpass.getpass("Please enter the password for " + username + ": ") 
-        logging.info('Logging into ' + portal)
         admin.login(username, password)
-        logging.info('Successfully logged in to ' + portal)
-        domain = input('Please enter the domain: ') 
-        cloud_folder = input("Please enter a name for the new Cloud Folder (Default='My Files'): ") or 'My Files'
-        print("Printing Possible Folder Group Names to hold the new Cloud Folder...")
+        logging.info('Successfully logged in to %s,', portal)
+        domain = input('Enter the domain: ') 
+        cloud_folder = input("Enter a name for the new Cloud Folder\n" +
+                "Or <ENTER> to create 'My Files'): ") or 'My Files'
+        print("Printing Available Folder Groups...")
         print("\t" + "Folder Group Names")
         print("\t" + "==================")
         for fg in admin.cloudfs.list_folder_groups():
             print("\t" + fg.name)
-        folder_group = input("Please enter one of the Folder Groups printed above to use (Default='portal-CloudFolders'):\n>") or 'portal-CloudFolders'
+        folder_group = input("Enter the Folder Group to be used\n" +
+                "Or <ENTER> to use 'portal-CloudFolders'") or 'portal-CloudFolders'
         users = admin.users.list_domain_users(domain)
-        failed_users = []
         for user in users:
             user_account = portal_types.UserAccount(user.name,domain)
             try:
                 admin.cloudfs.mkdir(cloud_folder, folder_group, user_account)
-                logging.info('Created Cloud Folder, ' + cloud_folder + ', for ' + user.name)
+                logging.info('Created %s for %s.', cloud_folder, user)
             except CTERAException as error:
                 logging.error(error)
-                logging.warning('Failed to make Cloud Folder, ' + cloud_folder + ', for ' + user.name)
                 failed_users.append(user.name)
+                logging.warning(
+                        'Failed making %s for %s.', cloud_folder, user.name)
     except CTERAException as error:
-        print(error)
-    if failed_users:
-        print('Failed to make cloud folder for the following users:')
-        for user in failed_users:
-            print(user)
+        logging.error(error)
 
-    # Write failed users to an output file
-    failed_file = open(file_failed_users,'w') 
-    for user in failed_users:
-        failed_file.write(user + '\n')
-    failed_file.close()    
-    admin.logout()
-    logging.info("Logged out of " + portal)
-    logging.info('Exiting script: ' + filename)
+admin.logout()
+logging.info("Logged out of " + portal)
+logging.info('Exiting script: ' + filename)
