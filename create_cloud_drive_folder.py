@@ -30,15 +30,14 @@ if __name__ == "__main__":
         admin.login(username, password)
         logging.info('Successfully logged in to %s,', portal)
         domain = input('Enter the domain: ') 
-        cloud_folder = input("Enter a name for the new Cloud Folder\n" +
-                "Or <ENTER> to create 'My Files'): ") or 'My Files'
+        cloud_folder = input("Enter a name for the new Cloud Folder: ")
         print("Printing Available Folder Groups...")
         print("\t" + "Folder Group Names")
         print("\t" + "==================")
         for fg in admin.cloudfs.list_folder_groups():
             print("\t" + fg.name)
-        folder_group = input("Enter the Folder Group to be used\n" +
-                "Or <ENTER> to use 'portal-CloudFolders'") or 'portal-CloudFolders'
+        folder_group = input("Enter a Folder Group from above to be use: ")
+        logging.info('Using folder group %s', folder_group)
         users = admin.users.list_domain_users(domain)
         for user in users:
             user_account = portal_types.UserAccount(user.name,domain)
