@@ -5,11 +5,6 @@ import getpass
 from cterasdk import *
 
 # Initialize global variables
-#portal = None
-#username = None
-#password = None
-#domain = None
-#input_file = None
 accounts = []
 script_name = os.path.basename(__file__)
 # Hardcoded input file name. Change to your liking.
@@ -53,4 +48,5 @@ if __name__ == "__main__":
                 logging.info('Failed to delete account: %s', account.name)
     except CTERAException as error:
         logging.error(error)
-    admin.logout()
+    admin.logut()
+logging.info('Exiting script: ' + filename)
