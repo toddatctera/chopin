@@ -5,15 +5,16 @@ import getpass
 from cterasdk import *
 
 # Initialize global variables
-portal = None
-username = None
-password = None
-domain = None
-input_file = None
+#portal = None
+#username = None
+#password = None
+#domain = None
+#input_file = None
 accounts = []
 script_name = os.path.basename(__file__)
-# Specify hardcoded input file name. Change to your liking.
-input_file = 'delete-users.txt'
+# Hardcoded input file name. Change to your liking.
+# Usernames should be one per line. No commas.
+input_file = 'delete-these-domain-users.txt'
 
 # Enable and set logging level.
 config.Logging.get().enable()
@@ -45,11 +46,11 @@ if __name__ == "__main__":
         # Loop through accounts and try to delete them.
         for account in accounts:
             try:
-                admin.users.delete(account.name)
-                logging.info('Deleted user account: ' + account.name)
+                admin.users.delete(account)
+                logging.info('Deleted user account: %s', account.name)
             except CTERAException as error:
                 logging.error(error)
-                logging.info('Probably failed to delete account: ' + account.name)
+                logging.info('Failed to delete account: %s', account.name)
     except CTERAException as error:
         logging.error(error)
     admin.logout()
