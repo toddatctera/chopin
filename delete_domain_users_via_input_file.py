@@ -48,5 +48,5 @@ if __name__ == "__main__":
                 logging.info('Failed to delete account: %s', account.name)
     except CTERAException as error:
         logging.error(error)
-    admin.logut()
+    admin.logout()
 logging.info('Exiting script: ' + filename)
