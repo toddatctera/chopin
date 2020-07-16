@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-# Creates a cloud folder for all users in the specified input file.
+'''
+Creates a cloud folder for all users in the specified input file.
+'''
 import os.path
 import logging
 import getpass
@@ -20,16 +22,16 @@ filename = os.path.basename(__file__)
 config.Logging.get().enable()
 config.Logging.get().setLevel(logging.INFO)
 
-logging.info('Starting script: ' + filename)
+logging.info("Starting script: %s", filename)
 
 if __name__ == "__main__":
     try:
         print("This script creates a cloud folder for specified domain users.")
         # Read inputs and set variables
-        portal = input('Enter the portal address: ') 
-        username = input('Enter the global admin username: ') 
+        portal = input('Enter the portal address: ')
+        username = input('Enter the global admin username: ')
         password = getpass.getpass('Enter the password for ' + username + ': ')
-        domain = input('Enter the domain: ') 
+        domain = input('Enter the domain: ')
         cloud_folder = input("Enter a name for the new Cloud Folder: ")
         # Login
         admin = GlobalAdmin(portal)
@@ -51,21 +53,20 @@ if __name__ == "__main__":
                     accounts.append(account)
                 except CTERAException as error:
                     logging.error(error)
-        # Try and create specified cloud folder for each user in accounts 
+        # Try and create specified cloud folder for each user in accounts
         for account in accounts:
-            user_account = portal_types.UserAccount(account.name,domain)
+            user_account = portal_types.UserAccount(account.name, domain)
             try:
                 admin.cloudfs.mkdir(cloud_folder, folder_group, user_account)
-                logging.info('Created %s for %s.', cloud_folder, account.name)
+                logging.info('Success: Created %s for %s.', cloud_folder, account.name)
             except CTERAException as error:
                 logging.error(error)
                 failed_users.append(account.name)
-                logging.warning(
-                        'Failed making %s for %s.', cloud_folder, account.name)
+                logging.warning("Failed: Could not create %s for %s.", cloud_folder, account.name)
     except CTERAException as error:
         logging.error(error)
 
 # Logout and exit
 admin.logout()
-logging.info("Logged out of " + portal)
-logging.info('Exiting script: ' + filename)
+logging.info("Logged out of %s", portal)
+logging.info("Exiting script: %s", filename)

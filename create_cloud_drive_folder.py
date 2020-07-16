@@ -23,14 +23,17 @@ logging.info('Starting script: ' + filename)
 if __name__ == "__main__":
     try:
         print("This script creates a cloud folder for specified domain users.")
+        # Read inputs and set variables
         portal = input('Enter the portal address: ') 
         username = input('Enter the global admin username: ') 
         password = getpass.getpass('Enter the password for ' + username + ': ')
+        domain = input('Enter the domain: ') 
+        cloud_folder = input("Enter a name for the new Cloud Folder: ")
+        # Login
         admin = GlobalAdmin(portal)
         admin.login(username, password)
         logging.info('Successfully logged in to %s,', portal)
-        domain = input('Enter the domain: ') 
-        cloud_folder = input("Enter a name for the new Cloud Folder: ")
+        # Pick a folder group to hold the new cloud folders
         print("Printing Available Folder Groups...")
         print("\t" + "Folder Group Names")
         print("\t" + "==================")
@@ -38,6 +41,7 @@ if __name__ == "__main__":
             print("\t" + fg.name)
         folder_group = input("Enter a Folder Group from above to be use: ")
         logging.info('Using folder group %s', folder_group)
+        # Try and create specified cloud folder for each user found
         users = admin.users.list_domain_users(domain)
         for user in users:
             user_account = portal_types.UserAccount(user.name,domain)
@@ -52,6 +56,7 @@ if __name__ == "__main__":
     except CTERAException as error:
         logging.error(error)
 
+# Logout and exit
 admin.logout()
 logging.info("Logged out of " + portal)
 logging.info('Exiting script: ' + filename)
