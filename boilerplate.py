@@ -37,15 +37,13 @@ def switch():
     option = int(input("Enter a task number to execute: "))
     tasksDictionary.get(option,default)()
 
-def default():
-    print("Invalid option")
-    logging.warning('Invalid option. Exiting script: ' + filename)
-
-
 tasksDictionary = {
         1 : run,
 
 }
 
+def default():
+    print("Invalid option")
+    logging.warning('Invalid option. Exiting script: ' + filename)
 
 switch()
