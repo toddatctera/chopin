@@ -10,7 +10,6 @@ filename = os.path.basename(__file__)
 config.Logging.get().enable()
 config.Logging.get().setLevel(logging.INFO)
 
-# Read input from keyboard and store into global variables.
 def run():
     try:
         logging.info("Starting script: " + filename)
@@ -33,4 +32,20 @@ def run():
         logging.info("Logged out of " + portal)
         logging.info('Exiting script: ' + filename)
 
-run()
+def switch():
+    print("Tasks to run:\n1. Run boilerplate code")
+    option = int(input("Enter a task number to execute: "))
+    tasksDictionary.get(option,default)()
+
+def default():
+    print("Invalid option")
+    logging.warning('Invalid option. Exiting script: ' + filename)
+
+
+tasksDictionary = {
+        1 : run,
+
+}
+
+
+switch()
